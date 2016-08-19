@@ -1,0 +1,35 @@
+<!--Create two constructor functions - person and student. Create a property for person. 
+Inherit the property of the function person into student. Then change the property in student function.-->
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		function Person(name){ // Super Constructor
+			this.name = name;
+		}
+		Person.prototype.getName = function(){	// Add the getName method to Person's prototype object
+			return this.name;
+		}
+		
+		function Student(name){	// Sub Constructor
+			Person.call(this, name);	// Person is called as a function, but the call() method allows us to keep the 'this' of Student 
+		}
+		
+		Student.prototype = Object.create(Person.prototype); // Replace Student.prototype with a new object created cloning Person.prototype 
+		Student.prototype.constructor = Student;	// Set the constructor property of Student.prototype with Student
+		
+		Student.prototype.getName = function(){	// Change the getName method for Student
+			return "Name: " + Person.prototype.getName.call(this);
+		}
+		
+		var p = new Person("Person A");
+		alert(p.getName());
+		var s = new Student("Student B");
+		alert(s.getName());
+		
+	</script>
+	
+</head>
+<body>
+</body>
+</html>
